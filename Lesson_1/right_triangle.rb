@@ -2,6 +2,7 @@
 puts 'Please enter the sides of a triangle below. Use "space" as a separator.'
 data = gets.chomp
 sorted = data.split(' ').map(&:to_f).sort
+# could also be extracted using "a, b, c = sorted[0..2]"
 c = sorted.pop # the longest side
 a = sorted.pop
 b = sorted.pop
