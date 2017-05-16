@@ -15,5 +15,6 @@ if D < 0
 elsif D.zero?
   puts "D = #{D}, x = #{(-b / (2 * a)).to_s}"
 else
-  puts "D = #{D}\nx1 = #{((-b + Math.sqrt(D)) / (2 * a)).to_s}\nx1 = #{((-b - Math.sqrt(D)) / (2 * a)).to_s}"
+  sqrt = Math.sqrt(D)
+  puts "D = #{D}\nx1 = #{((-b + sqrt) / (2 * a)).to_s}\nx1 = #{((-b - sqrt) / (2 * a)).to_s}"
 end
