@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-puts 'Please the coefficients of a quadratic equation. Use "space" as a separator.'
+puts 'Please enter the coefficients of a quadratic equation. Use "space" as a separator.'
 data = gets.chomp
 a, b, c = data.split(' ').map(&:to_f)
 

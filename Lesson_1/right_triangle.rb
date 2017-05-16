@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-puts 'Please the sides of a triangle below. Use "space" as a separator.'
+puts 'Please enter the sides of a triangle below. Use "space" as a separator.'
 data = gets.chomp
 sorted = data.split(' ').map(&:to_f).sort
 c = sorted.pop # the longest side
