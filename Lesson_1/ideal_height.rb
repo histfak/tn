@@ -4,7 +4,7 @@ data = gets.chomp
 name, height_s = data.split(' ')
 height = height_s.to_i
 if height - 110 < 0
-  puts "Wow! #{name}, your height is already ideal!"
+  puts "Wow! #{name}, your weight is already ideal!"
 else
-  puts "#{name}, your ideal height is #{height - 110}."
+  puts "#{name}, your ideal weight is #{height - 110}."
 end
