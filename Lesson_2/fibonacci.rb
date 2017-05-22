@@ -1,9 +1,8 @@
 #!/usr/bin/env ruby
-array = []
-(0..100).each_with_index do |num|
-  if num < 2
-    array << num
-  else
-    array << array[-1] + array[-2]
-  end
+array = [0, 1]
+
+loop do
+  pointer = array[-1] + array[-2] 
+  break if pointer >= 100
+  array << pointer
 end
