@@ -17,9 +17,7 @@ if a == b && a == c
 end
 if c**2 == a**2 + b**2
   puts 'Your triangle is right.'
+  puts 'In addition it is isosceles.' if a == b
 else
   puts 'Your triangle isn\'t right.'
-end
-if a == b || a == c || b == c
-  puts 'In addition it is isosceles.'
 end
