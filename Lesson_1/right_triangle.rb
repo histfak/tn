@@ -2,13 +2,14 @@
 puts 'Please enter the sides of a triangle below. Use "space" as a separator.'
 data = gets.chomp
 sorted = data.split(' ').map(&:to_f).sort
+raise 'Wrong arguments' if sorted.size != 3
 # could also be extracted using "a, b, c = sorted[0..2]"
 c = sorted.pop # the longest side
 a = sorted.pop
 b = sorted.pop
 unless (a < b + c) && (b < a + c) && (c < a + b)
   puts 'This triangle doesn\'t exist.'
-  return
+  exit
 end
 if a == b && a == c
   puts 'Your triangle isn\'t right, but equilateral and isosceles.'
