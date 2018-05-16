@@ -5,7 +5,7 @@ a, b, c = data.split(' ').map(&:to_f)
 
 if a.zero?
   puts 'Not a quadratic equation!'
-  return
+  exit
 end
 
 D = b**2 - 4 * a * c
@@ -13,8 +13,8 @@ D = b**2 - 4 * a * c
 if D < 0
   puts 'No roots!'
 elsif D.zero?
-  puts "D = #{D}, x = #{(-b / (2 * a)).to_s}"
+  puts "D = #{D}, x = #{(-b / (2 * a))}"
 else
   sqrt = Math.sqrt(D)
-  puts "D = #{D}\nx1 = #{((-b + sqrt) / (2 * a)).to_s}\nx1 = #{((-b - sqrt) / (2 * a)).to_s}"
+  puts "D = #{D}\nx1 = #{((-b + sqrt) / (2 * a))}\nx1 = #{((-b - sqrt) / (2 * a))}"
 end
