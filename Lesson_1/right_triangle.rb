@@ -13,7 +13,7 @@ unless (a < b + c) && (b < a + c) && (c < a + b)
 end
 if a == b && a == c
   puts 'Your triangle isn\'t right, but equilateral and isosceles.'
-  return
+  exit
 end
 if c**2 == a**2 + b**2
   puts 'Your triangle is right.'
