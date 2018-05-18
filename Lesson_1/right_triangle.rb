@@ -2,7 +2,7 @@
 puts 'Please enter the sides of the triangle below. Use "space" as a separator.'
 data = gets.chomp
 sorted = data.split(' ').map(&:to_f).sort
-raise 'Wrong arguments' if sorted.size != 3
+raise 'Wrong arguments' if sorted.size != 3 || sorted.include?(0)
 # could also be extracted using "a, b, c = sorted[0..2]"
 c = sorted.pop # the longest side
 a = sorted.pop
