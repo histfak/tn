@@ -8,19 +8,19 @@ class Station
   end
 
   def train_arrival(train)
-    trains << train
+    @trains << train
   end
 
   def train_departure(train)
-    trains.delete(train)
+    @trains.delete(train)
     train.station = nil
   end
 
   def trains_status(type = nil)
     if type.nil?
-      trains
+      @trains
     else
-      trains.select { |train| type == train.type }
+      @trains.select { |train| type == train.type }
     end
   end
 end
@@ -33,20 +33,20 @@ class Route
   end
 
   def add_station(station)
-    self.stations.insert(-2, station)
+    @stations.insert(-2, station)
   end
 
   def remove_station(station)
-    if [stations.first, stations.last].include?(station)
+    if [@stations.first, @stations.last].include?(station)
       puts 'You can\'t remove the first or terminal station!'
     else
-      self.stations.delete(station)
+      @stations.delete(station)
     end
   end
 
   def list_stations
     puts 'The route contains the following stations: '
-    stations.each { |station| puts station.name }
+    @stations.each { |station| puts station.name }
   end
 end
 
@@ -62,26 +62,26 @@ class Train
   end
 
   def set_route(route)
-    self.route = route
-    self.station = route.stations.first
+    @route = route
+    @station = route.stations.first
     route.stations.first.train_arrival(self)
   end
 
   def set_speed(speed)
     if speed > 0
-      self.speed = speed
+      @speed = speed
     else
       puts 'Speed must be > 0!'
     end
   end
 
   def stop
-    self.speed = 0
+    @speed = 0
   end
 
   def add_carriage
     if speed.zero?
-      self.cars += 1
+      @cars += 1
     else
       puts 'You can\'t add the carriage in motion!'
     end
@@ -90,7 +90,7 @@ class Train
   def remove_carriage
     puts "The train has no carriages!" if cars.zero?
     if speed.zero?
-      self.cars -= 1
+      @cars -= 1
     else
       puts 'You can\'t remove the carriage in motion!'
     end
@@ -100,36 +100,36 @@ class Train
     if route.nil?
       puts 'You have to add the route first!'
     else
-      station.name
+      @station.name
     end
   end
 
   def list_previous_station
-    if route.nil?
+    if @route.nil?
       puts 'You have to add the route first!'
     else
-      station_index = route.stations.index(station)
+      station_index = route.stations.index(@station)
       route.stations[station_index - 1].name if station_index != 0
     end
   end
 
   def list_next_station
-    if route.nil?
+    if @route.nil?
       puts 'You have to add the route first!'
     else
-      station_index = route.stations.index(station)
+      station_index = route.stations.index(@station)
       route.stations[station_index + 1].name if station_index != route.stations.size - 1
     end
   end
 
   def move_forward
-    if route.nil?
+    if @route.nil?
       puts 'You have to add the route first!'
     else
-      station_index = route.stations.index(station)
-      station.train_departure(self)
-      self.station = route.stations[station_index.next]
-      station.train_arrival(self)
+      station_index = route.stations.index(@station)
+      @station.train_departure(self)
+      @station = route.stations[station_index.next]
+      @station.train_arrival(self)
     end
   end
 
@@ -137,10 +137,10 @@ class Train
     if route.nil?
       puts 'You have to add the route first!'
     else
-      station_index = route.stations.index(station)
-      station.train_departure(self)
-      self.station = route.stations[station_index.pred]
-      station.train_arrival(self)
+      station_index = route.stations.index(@station)
+      @station.train_departure(self)
+      @station = route.stations[station_index.pred]
+      @station.train_arrival(self)
     end
   end
 end
