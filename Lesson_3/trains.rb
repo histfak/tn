@@ -13,7 +13,6 @@ class Station
 
   def train_departure(train)
     @trains.delete(train)
-    train.station = nil
   end
 
   def trains_status(type = nil)
@@ -44,6 +43,14 @@ class Route
     end
   end
 
+  def first_station
+    @stations.first
+  end
+
+  def terminal_station
+    @stations.last
+  end
+
   def list_stations
     puts 'The route contains the following stations: '
     @stations.each { |station| puts station.name }
@@ -51,8 +58,7 @@ class Route
 end
 
 class Train
-  attr_accessor :speed, :route, :station, :cars
-  attr_reader :number, :type
+  attr_reader :number, :type, :speed, :station, :route, :cars
 
   def initialize(number, type, cars)
     @number = number
@@ -63,20 +69,16 @@ class Train
 
   def set_route(route)
     @route = route
-    @station = route.stations.first
-    route.stations.first.train_arrival(self)
+    @station = route.first_station
+    route.first_station.train_arrival(self)
   end
 
-  def set_speed(speed)
-    if speed > 0
-      @speed = speed
-    else
-      puts 'Speed must be > 0!'
-    end
+  def increase_speed(value)
+    @speed += value
   end
 
-  def stop
-    @speed = 0
+  def decrease_speed(value)
+    @speed -= value if @speed - value > 0
   end
 
   def add_carriage
@@ -88,59 +90,40 @@ class Train
   end
 
   def remove_carriage
-    puts "The train has no carriages!" if cars.zero?
-    if speed.zero?
+    if cars.zero?
+      puts 'The train has no carriages!'
+    elsif speed.zero?
       @cars -= 1
     else
       puts 'You can\'t remove the carriage in motion!'
     end
   end
 
-  def list_current_station
-    if route.nil?
-      puts 'You have to add the route first!'
-    else
-      @station.name
-    end
+  def current_station
+    @station
   end
 
-  def list_previous_station
-    if @route.nil?
-      puts 'You have to add the route first!'
-    else
-      station_index = route.stations.index(@station)
-      route.stations[station_index - 1].name if station_index != 0
-    end
+  def station_index
+    route.stations.index(@station)
   end
 
-  def list_next_station
-    if @route.nil?
-      puts 'You have to add the route first!'
-    else
-      station_index = route.stations.index(@station)
-      route.stations[station_index + 1].name if station_index != route.stations.size - 1
-    end
+  def previous_station
+    route.stations[station_index - 1] if station_index != 0
+  end
+
+  def next_station
+    route.stations[station_index + 1] if station_index != route.stations.size - 1
   end
 
   def move_forward
-    if @route.nil?
-      puts 'You have to add the route first!'
-    else
-      station_index = route.stations.index(@station)
-      @station.train_departure(self)
-      @station = route.stations[station_index.next]
-      @station.train_arrival(self)
-    end
+    @station.train_departure(self)
+    @station = route.stations[station_index.next]
+    @station.train_arrival(self)
   end
 
   def move_backward
-    if route.nil?
-      puts 'You have to add the route first!'
-    else
-      station_index = route.stations.index(@station)
-      @station.train_departure(self)
-      @station = route.stations[station_index.pred]
-      @station.train_arrival(self)
-    end
+    @station.train_departure(self)
+    @station = route.stations[station_index.pred]
+    @station.train_arrival(self)
   end
 end
