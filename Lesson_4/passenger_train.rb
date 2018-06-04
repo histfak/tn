@@ -3,7 +3,7 @@ class PassengerTrain < Train
     if carriage.class? == PassengerCarriage
       @cars << carriage
     else
-      puts 'Wrong carrige type!'
+      puts 'Wrong carriage type!'
     end
     super
   end
