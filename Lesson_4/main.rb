@@ -15,9 +15,7 @@ class Main
     @trains = {}
     @carriages = {}
   end
-
-  SEP = ', use space as a separator: '
-
+  
   def start
     welcome_msg = <<msg
 
