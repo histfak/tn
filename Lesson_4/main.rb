@@ -15,7 +15,7 @@ class Main
     @trains = {}
     @carriages = {}
   end
-  
+
   def start
     welcome_msg = <<msg
 
@@ -25,11 +25,11 @@ Enter 2 to create a route
 Enter 3 to create a train
 Enter 4 to create a carriage
 ===================
-Enter 5 to add the station to the route
-Enter 6 to remove the station from the route
-Enter 7 to assign the route to the train
-Enter 8 to move the train forward
-Enter 9 to move the train backward
+Enter 5 to add a station to the route
+Enter 6 to remove a station from the route
+Enter 7 to assign a route to the train
+Enter 8 to move a train forward
+Enter 9 to move a train backward
 Enter 10 to add a carriage
 Enter 11 to remove a carriage
 ===================
