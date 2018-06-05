@@ -5,11 +5,8 @@ class PassengerTrain < Train
   end
 
   def add_carriage(carriage)
-    if carriage.class? == PassengerCarriage
+    if carriage.class == PassengerCarriage && speed.zero?
       @cars << carriage
-    else
-      puts 'Wrong carriage type!'
     end
-    super
   end
 end

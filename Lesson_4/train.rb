@@ -30,11 +30,12 @@ class Train
     end
   end
 
-  def remove_carriage
+  # maybe I had to use something like @cars.pop and write this method with no argument because any train is a stack
+  def remove_carriage(carriage)
     if cars.empty?
       puts 'The train has no carriages!'
     elsif speed.zero?
-      @cars.pop
+      @cars.delete(carriage)
     else
       puts 'You can\'t remove the carriage in motion!'
     end
