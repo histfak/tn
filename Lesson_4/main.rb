@@ -10,11 +10,13 @@ require_relative 'route'
 
 class Main
   def initialize
-    @stations = {}
-    @routes = {}
-    @trains = {}
-    @carriages = {}
+    @stations = []
+    @routes = []
+    @trains = []
+    @carriages = []
   end
+
+  SEP = ', use space as a separator: '
 
   def start
     welcome_msg = <<msg
@@ -77,10 +79,10 @@ msg
 
   # 1
   def ui_create_station
-    puts 'Enter the name of the station: '
+    puts 'Enter a name of the station: '
     name = gets.chomp
     station = Station.new(name)
-    @stations[station] = station.object_id
+    @stations << station
   end
 
   # 2
@@ -89,10 +91,27 @@ msg
 
   # 3
   def ui_create_train
+    puts "Enter a number of the train and its type (Cargo or Passenger)#{SEP}"
+    input = gets.chomp
+    data = input.split(' ')
+    if data[1] == 'Cargo'
+      train = CargoTrain.new(data[0])
+    else
+      train = PassengerTrain.new(data[0])
+    end
+    @trains << train
   end
 
   # 4
   def ui_create_carriage
+    puts 'Enter a type of the carriage: '
+    type = gets.chomp
+    if type == 'Cargo'
+      carriage = CargoCarriage.new
+    else
+      carriage = PassengerCarriage.new
+    end
+    @cars << carriage
   end
 
   # 5
