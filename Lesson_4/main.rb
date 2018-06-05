@@ -33,8 +33,8 @@ Enter 9 to move a train backward
 Enter 10 to add a carriage
 Enter 11 to remove a carriage
 ===================
-Enter 12 to see the list of stations of the route
-Enter 13 to see the list of trains in the station
+Enter 12 to see a list of stations of the route
+Enter 13 to see a list of trains in the station
 Enter another key to exit
 msg
 
