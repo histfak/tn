@@ -1,5 +1,5 @@
 class TextUi
-  attr_accessor :stations, :routes, :trains, :cars
+  attr_reader :stations, :routes, :trains, :cars
   def initialize
     @stations = []
     @routes = []
