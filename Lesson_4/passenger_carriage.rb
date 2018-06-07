@@ -1,1 +1,5 @@
-class PassengerCarriage < Carriage; end
+class PassengerCarriage < Carriage
+  def type
+    'Passenger'
+  end
+end

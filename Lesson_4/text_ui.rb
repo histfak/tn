@@ -23,10 +23,10 @@ class TextUi
     puts 'Enter 5 to add a station to the route' if routes.any?
     puts 'Enter 6 to remove a station from the route' if routes.any?
     puts 'Enter 7 to assign a route to the train' if routes.any? && trains.any?
-    puts 'Enter 8 to move a train forward' if trains.any?
-    puts 'Enter 9 to move a train backward' if trains.any?
+    puts 'Enter 8 to move a train forward' if trains.any? && routes.any?
+    puts 'Enter 9 to move a train backward' if trains.any? && routes.any?
     puts 'Enter 10 to add a carriage' if trains.any? && cars.any?
-    puts 'Enter 11 to remove a carriage' if cars.any?
+    puts 'Enter 11 to remove a carriage' if trains.any? && cars.any?
     puts '==================='
     puts 'Enter 12 to see a list of stations of the route' if routes.any?
     puts 'Enter 13 to see a list of trains in the station' if stations.any?
@@ -48,23 +48,41 @@ class TextUi
       when '4'
         ui_create_carriage
       when '5'
-        ui_add_station
+        if routes.any?
+          ui_add_station
+        end
       when '6'
-        ui_remove_station
+        if routes.any?
+          ui_remove_station
+        end
       when '7'
-        ui_assign_route
+        if trains.any?
+          ui_assign_route
+        end
       when '8'
-        ui_move_forward
+        if trains.any?
+          ui_move_forward
+        end
       when '9'
-        ui_move_backward
+        if trains.any?
+          ui_move_backward
+        end
       when '10'
-        ui_add_carriage
+        if trains.any?
+          ui_add_carriage
+        end
       when '11'
-        ui_remove_carriage
+        if trains.any?
+          ui_remove_carriage
+        end
       when '12'
-        ui_list_stations
+        if routes.any?
+          ui_list_stations
+        end
       when '13'
-        ui_trains_status
+        if stations.any?
+          ui_trains_status
+        end
       else
         exit
       end
@@ -103,6 +121,9 @@ class TextUi
     print 'Enter a carriage index: '
   end
 
+  def invalid_pars
+    puts 'Invalid parameters!'
+  end
 
   # 1
   def ui_create_station
@@ -123,7 +144,7 @@ class TextUi
 
   # 3
   def ui_create_train
-    print 'Enter a number of the train:'
+    print 'Enter a number of the train: '
     number = gets.chomp
     print 'Enter a type of the train (Cargo or Passenger): '
     type = gets.chomp
@@ -136,7 +157,7 @@ class TextUi
 
   # 4
   def ui_create_carriage
-    print 'Enter a type of the carriage(Cargo or Passenger): '
+    print 'Enter a type of the carriage (Cargo or Passenger): '
     type = gets.chomp
     if type == 'Cargo'
       @cars << CargoCarriage.new
@@ -153,7 +174,11 @@ class TextUi
     show_all_stations
     stations_msg
     station = gets.chomp.to_i
-    @routes[route].add_station(@stations[station])
+    if @routes[route].nil? || @stations[station].nil?
+      invalid_pars
+    else
+      @routes[route].add_station(@stations[station])
+    end
   end
 
   # 6
@@ -164,7 +189,11 @@ class TextUi
     show_all_stations
     stations_msg
     station = gets.chomp.to_i
-    @routes[route].remove_station(@stations[station])
+    if @routes[route].nil? || @stations[station].nil?
+      invalid_pars
+    else
+      @routes[route].remove_station(@stations[station])
+    end
   end
 
   # 7
@@ -175,7 +204,11 @@ class TextUi
     show_all_trains
     trains_msg
     train = gets.chomp.to_i
-    @trains[train].set_route(@routes[route])
+    if @trains[train].nil? || @routes[route].nil?
+      invalid_pars
+    else
+      @trains[train].set_route(@routes[route])
+    end
   end
 
   # 8
@@ -183,7 +216,7 @@ class TextUi
     show_all_trains
     trains_msg
     train = gets.chomp.to_i
-    @trains[train].move_forward
+    @trains[train].move_forward if @trains[train]
   end
 
   # 9
@@ -191,7 +224,7 @@ class TextUi
     show_all_trains
     trains_msg
     train = gets.chomp.to_i
-    @trains[train].move_backward
+    @trains[train].move_backward if @trains[train]
   end
 
   # 10
@@ -202,7 +235,11 @@ class TextUi
     show_all_cars
     cars_msg
     carriage = gets.chomp.to_i
-    @trains[train].add_carriage(@cars[carriage])
+    if @trains[train].nil? || @cars[carriage].nil?
+      invalid_pars
+    else
+      @trains[train].add_carriage(@cars[carriage])
+    end
   end
 
   # 11
@@ -213,7 +250,11 @@ class TextUi
     show_all_cars
     cars_msg
     carriage = gets.chomp.to_i
-    @trains[train].remove_carriage(@cars[carriage])
+    if @trains[train].nil? || @cars[carriage].nil?
+      invalid_pars
+    else
+      @trains[train].remove_carriage(@cars[carriage])
+    end
   end
 
   # 12
@@ -221,7 +262,7 @@ class TextUi
     show_all_routes
     routes_msg
     route = gets.chomp.to_i
-    @routes[route].list_stations
+    @routes[route].list_stations if @routes[route]
   end
 
   # 13
@@ -231,10 +272,10 @@ class TextUi
     station = gets.chomp.to_i
     print 'Enter a type of the train (Cargo or Passenger) or press "Return": '
     type = gets.chomp
-    if type == nil
-      @stations[station].trains_status
+    if type.empty?
+      @stations[station].trains_status.each { |train| puts train.number } if @stations[station]
     else
-      @stations[station].trains_status(type)
+      @stations[station].trains_status(type).each { |train| puts train.number } if @stations[station]
     end
   end
 end

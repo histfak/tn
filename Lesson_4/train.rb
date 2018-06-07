@@ -1,12 +1,13 @@
 class Train
-  attr_reader :number, :type, :speed, :station, :route, :cars
+  attr_reader :number, :speed, :station, :route, :cars
 
   def initialize(number)
     @number = number
-    @type = 'Generic'
     @cars = []
     @speed = 0
   end
+
+  def type; end
 
   def set_route(route)
     @route = route
@@ -24,7 +25,11 @@ class Train
 
   def add_carriage(carriage)
     if speed.zero?
-      @cars << carriage
+      if carriage.type == type
+        @cars << carriage
+      else
+        puts 'Types must be equal!'
+      end
     else
       puts 'You can\'t add the carriage in motion!'
     end
