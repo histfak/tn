@@ -20,16 +20,12 @@ class Train
   end
 
   def decrease_speed(value)
-    @speed -= value if @speed - value > 0
+    @speed -= value if @speed - value >= 0
   end
 
   def add_carriage(carriage)
     if speed.zero?
-      if carriage.type == type
-        @cars << carriage
-      else
-        puts 'Types must be equal!'
-      end
+      @cars << carriage
     else
       puts 'You can\'t add the carriage in motion!'
     end
@@ -63,15 +59,19 @@ class Train
   end
 
   def move_forward
-    @station.train_departure(self)
-    @station = route.stations[station_index.next]
-    @station.train_arrival(self)
+    if station_index != route.stations.size - 1
+      @station.train_departure(self)
+      @station = route.stations[station_index.next]
+      @station.train_arrival(self)
+    end
   end
 
   def move_backward
-    @station.train_departure(self)
-    @station = route.stations[station_index.pred]
-    @station.train_arrival(self)
+    if station_index != 0
+      @station.train_departure(self)
+      @station = route.stations[station_index.pred]
+      @station.train_arrival(self)
+    end
   end
 
   private
