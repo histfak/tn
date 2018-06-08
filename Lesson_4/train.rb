@@ -59,7 +59,7 @@ class Train
   end
 
   def move_forward
-    if station_index != route.stations.size - 1
+    if next_station
       @station.train_departure(self)
       @station = route.stations[station_index.next]
       @station.train_arrival(self)
@@ -67,7 +67,7 @@ class Train
   end
 
   def move_backward
-    if station_index != 0
+    if previous_station
       @station.train_departure(self)
       @station = route.stations[station_index.pred]
       @station.train_arrival(self)
