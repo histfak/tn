@@ -130,7 +130,7 @@ class TextUi
     print 'Enter a name of the station: '
     name = gets.chomp
     @stations << Station.new(name)
-    puts 'The station has just been created.'
+    puts 'The station has just been created and is in working order.'
   rescue RuntimeError => e
     puts e.message
     retry
@@ -144,7 +144,7 @@ class TextUi
     print 'Enter the index of the terminal station: '
     st2 = gets.chomp.to_i
     @routes << Route.new(stations[st1], stations[st2])
-    puts 'The route has just been created.'
+    puts 'The route has just been created and is in working order.'
   rescue RuntimeError => e
     puts e.message
     retry
@@ -162,7 +162,7 @@ class TextUi
       @trains << CargoTrain.new(number)
     else raise 'Wrong train type!'
     end
-    puts 'The train has just been created.'
+    puts 'The train has just been created and is in working order.'
   rescue RuntimeError => e
     puts e.message
     retry
