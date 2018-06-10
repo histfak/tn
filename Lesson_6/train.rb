@@ -86,7 +86,7 @@ class Train
   protected
 
   def validate!
-    raise 'Incorrect number!' if (number =~ /^[a-zA-Z0-9]{3}-?[a-zA-Z0-9]{2}$/) != 0
+    raise 'Incorrect number!' if (number =~ /^[a-z0-9]{3}-?[a-z0-9]{2}$/i) != 0
     true
   end
 
