@@ -14,8 +14,8 @@ class Train
     register_instance
   end
 
-  def self.find(number)
-    ObjectSpace.each_object(Train).to_a.select { |train| train if train.number == number }
+  def self.find(num)
+    ObjectSpace.each_object(Train).find_all { |train| train if train.number == num }
   end
 
   def type; end
