@@ -15,13 +15,7 @@ class Train
   end
 
   def self.find(number)
-    ObjectSpace.each_object(Train).to_a.select do |train|
-      if train.number == number
-        return train
-      else
-        return nil
-      end
-    end
+    ObjectSpace.each_object(Train).to_a.select { |train| train.number == number ? train : nil }
   end
 
   def type; end
