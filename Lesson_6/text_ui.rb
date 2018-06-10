@@ -160,7 +160,8 @@ class TextUi
       @trains << PassengerTrain.new(number)
     elsif type == 'Cargo'
       @trains << CargoTrain.new(number)
-    else raise 'Wrong train type!'
+    else
+      raise 'Wrong train type!'
     end
     puts 'The train has just been created and is in working order.'
   rescue RuntimeError => e
