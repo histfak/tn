@@ -11,5 +11,5 @@ require_relative 'text_ui'
 require_relative 'brand'
 require_relative 'instance_counter'
 
-# main = TextUi.new
-# main.start
+main = TextUi.new
+main.start

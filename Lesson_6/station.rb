@@ -35,9 +35,16 @@ class Station
     end
   end
 
+  def valid?
+    validate!
+  rescue
+    false
+  end
+
   protected
 
   def validate!
-    raise 'Incorrect name!' if name.empty?
+    raise 'Incorrect name!' if name.empty? || name.class != String
+    true
   end
 end

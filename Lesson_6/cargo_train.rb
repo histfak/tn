@@ -4,10 +4,6 @@ class CargoTrain < Train
   end
 
   def add_carriage(carriage)
-    if carriage.type == type
-      super(carriage)
-    else
-      puts 'Types must be equal!'
-    end
+    super(carriage) if carriage.type == type
   end
 end

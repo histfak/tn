@@ -38,22 +38,11 @@ class Train
   end
 
   def add_carriage(carriage)
-    if speed.zero?
-      @cars << carriage
-    else
-      puts 'You can\'t add the carriage in motion!'
-    end
+    @cars << carriage if speed.zero?
   end
 
-  # maybe I had to use something like @cars.pop and write this method with no argument because any train is a stack
   def remove_carriage(carriage)
-    if cars.empty?
-      puts 'The train has no carriages!'
-    elsif speed.zero?
-      @cars.delete(carriage)
-    else
-      puts 'You can\'t remove the carriage in motion!'
-    end
+    @cars.delete(carriage) if !cars.empty? && speed.zero?
   end
 
   def cars_number
@@ -89,13 +78,16 @@ class Train
   end
 
   def valid?
-
+    validate!
+  rescue
+    false
   end
 
   protected
 
   def validate!
     raise 'Incorrect number!' if (number =~ /^[a-zA-Z0-9]{3}-?[a-zA-Z0-9]{2}$/) != 0
+    true
   end
 
   def station_index

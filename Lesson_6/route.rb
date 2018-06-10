@@ -16,11 +16,7 @@ class Route
   end
 
   def remove_station(station)
-    if [@stations.first, @stations.last].include?(station)
-      puts 'You can\'t remove the first or terminal station!'
-    else
-      @stations.delete(station)
-    end
+    @stations.delete(station) unless [@stations.first, @stations.last].include?(station)
   end
 
   def first_station
@@ -36,9 +32,16 @@ class Route
     @stations.each { |station| puts station.name }
   end
 
+  def valid?
+    validate!
+  rescue
+    false
+  end
+
   protected
 
   def validate!
-    raise 'Wrong arguments!' if first_station.class != Station || terminal_station.class != Station
+    raise 'Wrong arguments!' if @stations.any? { |station| station.class != Station }
+    true
   end
 end
