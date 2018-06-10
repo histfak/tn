@@ -8,6 +8,8 @@ require_relative 'passenger_carriage'
 require_relative 'station'
 require_relative 'route'
 require_relative 'text_ui'
+require_relative 'brand'
+require_relative 'instance_counter'
 
 main = TextUi.new
 main.start

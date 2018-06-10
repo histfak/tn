@@ -1,8 +1,14 @@
+require_relative 'instance_counter'
+
 class Route
+  include InstanceCounter::InstanceMethods
+  extend InstanceCounter::ClassMethods
+
   attr_reader :stations
 
   def initialize(first, terminal)
     @stations = [first, terminal]
+    register_instance
   end
 
   def add_station(station)

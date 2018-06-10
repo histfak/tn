@@ -1,14 +1,27 @@
+require_relative 'brand'
+require_relative 'instance_counter'
+
 class Train
+  include Brand
+  include InstanceCounter::InstanceMethods
+  extend InstanceCounter::ClassMethods
   attr_reader :number, :speed, :station, :route, :cars
 
   def initialize(number)
     @number = number
     @cars = []
     @speed = 0
+    register_instance
   end
 
-  def self.find
-
+  def self.find(number)
+    ObjectSpace.each_object(Train).to_a.select do |train|
+      if train.number == number
+        return train
+      else
+        return nil
+      end
+    end
   end
 
   def type; end
