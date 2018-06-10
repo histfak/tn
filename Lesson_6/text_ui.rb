@@ -177,7 +177,12 @@ class TextUi
       @cars << CargoCarriage.new
     elsif type == 'Passenger'
       @cars << PassengerCarriage.new
+    else
+      raise 'Wrong carriage type!'
     end
+  rescue RuntimeError => e
+    puts e.message
+    retry
   end
 
   # 5
