@@ -157,7 +157,7 @@ class TextUi
     elsif type == 'Cargo'
       @trains << CargoTrain.new(number)
     end
-    puts 'The train just has been created.'
+    puts 'The train has just been created.'
   rescue RuntimeError => e
     puts e.message
   end
