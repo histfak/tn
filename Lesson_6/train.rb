@@ -10,6 +10,7 @@ class Train
 
   def initialize(number)
     @number = number
+    validate!
     @cars = []
     @speed = 0
     @@trains_list[number] = self
@@ -87,7 +88,15 @@ class Train
     end
   end
 
+  def valid?
+
+  end
+
   protected
+
+  def validate!
+    raise 'Incorrect number!' if (number =~ /^[a-zA-Z0-9]{3}-?[a-zA-Z0-9]{2}$/) != 0
+  end
 
   def station_index
     route.stations.index(@station)
