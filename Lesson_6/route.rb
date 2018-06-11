@@ -1,7 +1,9 @@
 require_relative 'instance_counter'
+require_relative 'validation'
 
 class Route
   include InstanceCounter
+  include Validation
 
   attr_reader :stations
 
@@ -32,16 +34,9 @@ class Route
     @stations.each { |station| puts station.name }
   end
 
-  def valid?
-    validate!
-  rescue
-    false
-  end
-
   protected
 
   def validate!
     raise 'Wrong arguments!' if @stations.any? { |station| station.class != Station } || first_station == terminal_station
-    true
   end
 end

@@ -1,9 +1,11 @@
 require_relative 'brand'
 require_relative 'instance_counter'
+require_relative 'validation'
 
 class Train
   include Brand
   include InstanceCounter
+  include Validation
   attr_reader :number, :speed, :station, :route, :cars
 
   @@trains_list = {}
@@ -77,17 +79,10 @@ class Train
     end
   end
 
-  def valid?
-    validate!
-  rescue
-    false
-  end
-
   protected
 
   def validate!
     raise 'Incorrect number!' if (number =~ /^[a-z0-9]{3}-?[a-z0-9]{2}$/i) != 0
-    true
   end
 
   def station_index
