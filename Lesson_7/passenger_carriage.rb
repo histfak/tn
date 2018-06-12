@@ -16,6 +16,8 @@ class PassengerCarriage < Carriage
     @taken += 1 if @capacity - @taken > 0
   end
 
+  protected
+
   def validate!
     raise 'Incorrect value of capacity!' if capacity.class != Integer
     raise 'Enter a positive value!' if capacity <= 0
