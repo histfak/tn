@@ -23,8 +23,6 @@ class Train
     @@trains_list[num]
   end
 
-  def type; end
-
   def set_route(route)
     @route = route
     @station = route.first_station
@@ -40,7 +38,7 @@ class Train
   end
 
   def add_carriage(carriage)
-    @cars << carriage if speed.zero?
+    @cars << carriage if speed.zero? && !@cars.include?(carriage)
   end
 
   def remove_carriage(carriage)
@@ -79,10 +77,18 @@ class Train
     end
   end
 
+  def go_round
+    index = 0
+    while index < @cars.length
+      yield @cars[index]
+      index += 1
+    end
+  end
+
   protected
 
   def validate!
-    raise 'Incorrect number!' if (number =~ /^[a-z0-9]{3}-?[a-z0-9]{2}$/i) != 0
+    raise 'Incorrect number!' if number !~ /^[a-z0-9]{3}-?[a-z0-9]{2}$/i
   end
 
   def station_index

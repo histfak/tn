@@ -37,6 +37,14 @@ class Station
     end
   end
 
+  def go_round
+    index = 0
+    while index < @trains.length
+      yield @trains[index]
+      index += 1
+    end
+  end
+
   protected
 
   def validate!

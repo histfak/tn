@@ -1,6 +1,9 @@
 class PassengerTrain < Train
-  def type
-    'Passenger'
+  attr_reader :type
+
+  def initialize(number)
+    super(number)
+    @type = 'Passenger'
   end
 
   def add_carriage(carriage)

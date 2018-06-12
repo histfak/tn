@@ -30,6 +30,10 @@ class TextUi
     puts '==================='
     puts 'Enter 12 to see a list of stations of the route' if routes.any?
     puts 'Enter 13 to see a list of trains in the station' if stations.any?
+    puts 'Enter 14 to see a detailed list of all trains in the station' if stations.any?
+    puts 'Enter 15 to see a list of all carriages in the train' if trains.any?
+    puts 'Enter 16 to load cargo to the Cargo carriage' if cars.any? { |car| car.type == 'Cargo'}
+    puts 'Enter 17 to take a seat in the Passenger carriage' if cars.any? { |car| car.type == 'Passenger'}
     puts "Enter another key to exit\n"
   end
 
@@ -83,6 +87,22 @@ class TextUi
         if stations.any?
           ui_trains_status
         end
+      when '14'
+        if stations.any?
+          ui_station_status
+        end
+      when '15'
+        if trains.any?
+          ui_carriages_status
+        end
+      when '16'
+        if cars.any? { |car| car.type == 'Cargo'}
+          ui_load_cargo
+        end
+      when '17'
+        if cars.any? { |car| car.type == 'Passenger'}
+          ui_take_seat
+        end
       else
         exit
       end
@@ -102,7 +122,7 @@ class TextUi
   end
 
   def show_all_cars
-    cars.each_with_index { |carriage, index| puts "#{index}: #{carriage.class}" }
+    cars.each_with_index { |carriage, index| puts "#{index}: #{carriage.type}, capacity: #{carriage.capacity}, taken: #{carriage.taken}" }
   end
 
   def stations_msg
@@ -174,9 +194,13 @@ class TextUi
     print 'Enter a type of the carriage (Cargo or Passenger): '
     type = gets.chomp
     if type == 'Cargo'
-      @cars << CargoCarriage.new
+      print 'Enter a capacity of the carriage: '
+      capacity = gets.chomp.to_i
+      @cars << CargoCarriage.new(capacity)
     elsif type == 'Passenger'
-      @cars << PassengerCarriage.new
+      print 'Enter a number of seats: '
+      seats = gets.chomp.to_i
+      @cars << PassengerCarriage.new(seats)
     else
       raise 'Wrong carriage type!'
     end
@@ -296,5 +320,59 @@ class TextUi
     else
       @stations[station].trains_status(type).each { |train| puts train.number } if @stations[station]
     end
+  end
+
+  # 14
+  def ui_station_status
+    show_all_stations
+    stations_msg
+    station = gets.chomp.to_i
+    @stations[station].go_round do |train|
+      puts "Train \##{train.number}, type: #{train.type}, #{train.cars.size} carriages"
+    end
+  end
+
+  # 15
+  def ui_carriages_status
+    show_all_trains
+    trains_msg
+    train = gets.chomp.to_i
+    index = 1
+    @trains[train].go_round do |car|
+      puts "Carriage #{index}, type: #{car.type}, capacity: #{car.capacity}, taken: #{car.taken}"
+      index += 1
+    end
+  end
+
+  # 16
+  def ui_load_cargo
+    show_all_cars
+    cars_msg
+    car = gets.chomp.to_i
+    if @cars[car] && @cars[car].type == 'Cargo'
+      print 'Enter an amount of cargo: '
+      cargo = gets.chomp.to_i
+      @cars[car].load(cargo)
+    else
+      raise 'Wrong arguments!'
+    end
+  rescue RuntimeError => e
+    puts e.message
+    retry
+  end
+
+  # 17
+  def ui_take_seat
+    show_all_cars
+    cars_msg
+    car = gets.chomp.to_i
+    if @cars[car] && @cars[car].type == 'Passenger'
+      @cars[car].take_seat
+    else
+      raise 'Wrong arguments!'
+    end
+  rescue RuntimeError => e
+    puts e.message
+    retry
   end
 end

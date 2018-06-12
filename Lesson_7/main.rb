@@ -10,6 +10,7 @@ require_relative 'route'
 require_relative 'text_ui'
 require_relative 'brand'
 require_relative 'instance_counter'
+require_relative 'validation'
 
 main = TextUi.new
 main.start
