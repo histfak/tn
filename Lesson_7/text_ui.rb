@@ -337,10 +337,8 @@ class TextUi
     show_all_trains
     trains_msg
     train = gets.chomp.to_i
-    index = 1
-    @trains[train].go_round do |car|
+    @trains[train].go_round do |car, index|
       puts "Carriage #{index}, type: #{car.type}, capacity: #{car.capacity}, taken: #{car.taken}"
-      index += 1
     end
   end
 
