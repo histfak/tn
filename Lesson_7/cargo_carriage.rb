@@ -1,18 +1,16 @@
 require_relative 'validation'
-require_relative 'carriage_stuff'
 
 class CargoCarriage < Carriage
-  include CarriageStuff
   include Validation
 
+  attr_reader :type
+
   def initialize(capacity)
-    @capacity = capacity
-    @taken = 0
+    super(capacity)
     @type = 'Cargo'
-    validate!
   end
 
   def load(number)
-    @taken += number if number <= @capacity
+    @taken += number if number <= available
   end
 end

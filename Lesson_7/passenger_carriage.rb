@@ -1,18 +1,16 @@
 require_relative 'validation'
-require_relative 'carriage_stuff'
 
 class PassengerCarriage < Carriage
-  include CarriageStuff
   include Validation
 
+  attr_reader :type
+
   def initialize(capacity)
-    @capacity = capacity
-    @taken = 0
+    super(capacity)
     @type = 'Passenger'
-    validate!
   end
 
   def take_seat
-    @taken += 1 if @capacity - @taken > 0
+    @taken += 1 if available > 0
   end
 end

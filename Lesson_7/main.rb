@@ -11,7 +11,6 @@ require_relative 'text_ui'
 require_relative 'brand'
 require_relative 'instance_counter'
 require_relative 'validation'
-require_relative 'carriage_stuff'
 
 main = TextUi.new
 main.start
