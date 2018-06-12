@@ -1,3 +1,6 @@
+require_relative 'validation'
+require_relative 'carriage_stuff'
+
 class CargoCarriage < Carriage
   include CarriageStuff
 
