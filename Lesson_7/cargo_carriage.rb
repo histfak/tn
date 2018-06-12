@@ -1,5 +1,5 @@
 class CargoCarriage < Carriage
-  attr_reader :type, :taken, :capacity
+  include CarriageStuff
 
   def initialize(capacity)
     @capacity = capacity
@@ -10,16 +10,5 @@ class CargoCarriage < Carriage
 
   def load(number)
     @taken += number if number <= @capacity
-  end
-
-  def available
-    @capacity - @taken
-  end
-
-  protected
-
-  def validate!
-    raise 'Incorrect value of capacity!' if capacity.class != Integer
-    raise 'Enter a positive value!' if capacity <= 0
   end
 end
