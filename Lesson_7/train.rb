@@ -78,11 +78,7 @@ class Train
   end
 
   def go_round
-    index = 0
-    while index < @cars.length
-      yield @cars[index]
-      index += 1
-    end
+    @cars.each { |car| yield car }
   end
 
   protected

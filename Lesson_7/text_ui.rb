@@ -29,8 +29,8 @@ class TextUi
     puts 'Enter 11 to remove a carriage' if trains.any? && cars.any?
     puts '==================='
     puts 'Enter 12 to see a list of stations of the route' if routes.any?
-    puts 'Enter 13 to see a list of trains in the station' if stations.any?
-    puts 'Enter 14 to see a detailed list of all trains in the station' if stations.any?
+    puts 'Enter 13 to see a list of trains in the station' if stations.any? && trains.any?
+    puts 'Enter 14 to see a detailed list of all trains in the station' if stations.any? && trains.any?
     puts 'Enter 15 to see a list of all carriages in the train' if trains.any?
     puts 'Enter 16 to load cargo to the Cargo carriage' if cars.any? { |car| car.type == 'Cargo'}
     puts 'Enter 17 to take a seat in the Passenger carriage' if cars.any? { |car| car.type == 'Passenger'}
