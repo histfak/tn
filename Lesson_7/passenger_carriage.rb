@@ -3,6 +3,7 @@ require_relative 'carriage_stuff'
 
 class PassengerCarriage < Carriage
   include CarriageStuff
+  include Validation
 
   def initialize(capacity)
     @capacity = capacity
