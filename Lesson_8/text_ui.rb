@@ -13,25 +13,23 @@ class TextUi
 
   private
 
-  def cmds
-    { c1: 'Enter 1 to create a station', c2: 'Enter 3 to create a train',
-      c3: 'Enter 3 to create a train', c4:  'Enter 4 to create a carriage',
-      c5: 'Enter 5 to add a station to the route',
-      c6: 'Enter 6 to remove a station from the route',
-      c7: 'Enter 6 to remove a station from the route',
-      c8: 'Enter 8 to move a train forward', c9: 'Enter 9 to move a train backward',
-      c10: 'Enter 10 to add a carriage', c11: 'Enter 11 to remove a carriage',
-      c12: 'Enter 12 to see a list of stations of the route',
-      c13: 'Enter 13 to see a list of trains in the station',
-      c14: 'Enter 14 to see a detailed list of all trains in the station',
-      c15: 'Enter 15 to see a list of all carriages in the train',
-      c16: 'Enter 16 to load cargo to the Cargo carriage',
-      c17: 'Enter 17 to take a seat in the Passenger carriage',
-      sep: '===================', menu: "\n===== MENU =====",
-      exit: "Enter another key to exit\n" }
-  end
-
   def list_commands
+    cmds = { c1: 'Enter 1 to create a station', c2: 'Enter 3 to create a train',
+             c3: 'Enter 3 to create a train', c4:  'Enter 4 to create a carriage',
+             c5: 'Enter 5 to add a station to the route',
+             c6: 'Enter 6 to remove a station from the route',
+             c7: 'Enter 6 to remove a station from the route',
+             c8: 'Enter 8 to move a train forward', c9: 'Enter 9 to move a train backward',
+             c10: 'Enter 10 to add a carriage', c11: 'Enter 11 to remove a carriage',
+             c12: 'Enter 12 to see a list of stations of the route',
+             c13: 'Enter 13 to see a list of trains in the station',
+             c14: 'Enter 14 to see a detailed list of all trains in the station',
+             c15: 'Enter 15 to see a list of all carriages in the train',
+             c16: 'Enter 16 to load cargo to the Cargo carriage',
+             c17: 'Enter 17 to take a seat in the Passenger carriage',
+             sep: '===================', menu: "\n===== MENU =====",
+             exit: "Enter another key to exit\n" }
+
     puts cmds[:menu]
     puts cmds[:c1]
     puts cmds[:c2] if stations.size >= 2
