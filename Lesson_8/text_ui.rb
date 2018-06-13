@@ -13,32 +13,48 @@ class TextUi
 
   private
 
-  # rubocop:disable Metrics/LineLength
-  def list_commands
-    puts "\n===== MENU ====="
-    puts 'Enter 1 to create a station'
-    puts 'Enter 2 to create a route' if stations.size >= 2
-    puts 'Enter 3 to create a train'
-    puts 'Enter 4 to create a carriage'
-    puts '==================='
-    puts 'Enter 5 to add a station to the route' if routes.any?
-    puts 'Enter 6 to remove a station from the route' if routes.any?
-    puts 'Enter 7 to assign a route to the train' if routes.any? && trains.any?
-    puts 'Enter 8 to move a train forward' if trains.any? && routes.any?
-    puts 'Enter 9 to move a train backward' if trains.any? && routes.any?
-    puts 'Enter 10 to add a carriage' if trains.any? && cars.any?
-    puts 'Enter 11 to remove a carriage' if trains.any? && cars.any?
-    puts '==================='
-    puts 'Enter 12 to see a list of stations of the route' if routes.any?
-    puts 'Enter 13 to see a list of trains in the station' if stations.any? && trains.any?
-    puts 'Enter 14 to see a detailed list of all trains in the station' if stations.any? && trains.any?
-    puts 'Enter 15 to see a list of all carriages in the train' if trains.any?
-    puts 'Enter 16 to load cargo to the Cargo carriage' if cars.any? { |car| car.type == 'Cargo' }
-    puts 'Enter 17 to take a seat in the Passenger carriage' if cars.any? { |car| car.type == 'Passenger' }
-    puts "Enter another key to exit\n"
+  def cmds
+    { c1: 'Enter 1 to create a station', c2: 'Enter 3 to create a train',
+      c3: 'Enter 3 to create a train', c4:  'Enter 4 to create a carriage',
+      c5: 'Enter 5 to add a station to the route',
+      c6: 'Enter 6 to remove a station from the route',
+      c7: 'Enter 6 to remove a station from the route',
+      c8: 'Enter 8 to move a train forward', c9: 'Enter 9 to move a train backward',
+      c10: 'Enter 10 to add a carriage', c11: 'Enter 11 to remove a carriage',
+      c12: 'Enter 12 to see a list of stations of the route',
+      c13: 'Enter 13 to see a list of trains in the station',
+      c14: 'Enter 14 to see a detailed list of all trains in the station',
+      c15: 'Enter 15 to see a list of all carriages in the train',
+      c16: 'Enter 16 to load cargo to the Cargo carriage',
+      c17: 'Enter 17 to take a seat in the Passenger carriage',
+      sep: '===================', menu: "\n===== MENU =====",
+      exit: "Enter another key to exit\n" }
   end
 
-  # rubocop:enable Metrics/LineLength
+  def list_commands
+    puts cmds[:menu]
+    puts cmds[:c1]
+    puts cmds[:c2] if stations.size >= 2
+    puts cmds[:c3]
+    puts cmds[:c4]
+    puts cmds[:sep]
+    puts cmds[:c5] if routes.any?
+    puts cmds[:c6] if routes.any?
+    puts cmds[:c7] if routes.any? && trains.any?
+    puts cmds[:c8] if trains.any? { |train| !train.route.nil? }
+    puts cmds[:c9] if trains.any? && routes.any?
+    puts cmds[:c10] if trains.any? && cars.any?
+    puts cmds[:c11] if trains.any? { |train| train.cars.size >= 1 }
+    puts cmds[:sep]
+    puts cmds[:c12] if routes.any?
+    puts cmds[:c13] if stations.any? { |station| station.trains.size >= 1 }
+    puts cmds[:c14] if stations.any? && trains.any?
+    puts cmds[:c15] if trains.any?
+    puts cmds[:c16] if cars.any? { |car| car.type == 'Cargo' }
+    puts cmds[:c17] if cars.any? { |car| car.type == 'Passenger' }
+    puts cmds[:exit]
+  end
+
   def menu
     loop do
       list_commands
