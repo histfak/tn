@@ -9,8 +9,4 @@ class CargoCarriage < Carriage
     super(capacity)
     @type = 'Cargo'
   end
-
-  def load(number)
-    @taken += number if number <= available
-  end
 end

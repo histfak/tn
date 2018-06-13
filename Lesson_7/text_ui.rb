@@ -365,7 +365,7 @@ class TextUi
     cars_msg
     car = gets.chomp.to_i
     if @cars[car] && @cars[car].type == 'Passenger'
-      @cars[car].take_seat
+      @cars[car].load
     else
       raise 'Wrong arguments!'
     end

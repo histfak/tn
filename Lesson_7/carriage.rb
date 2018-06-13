@@ -15,6 +15,10 @@ class Carriage
     @capacity - @taken
   end
 
+  def load(number)
+    @taken += number if number <= available
+  end
+
   protected
 
   def validate!

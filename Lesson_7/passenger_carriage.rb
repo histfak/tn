@@ -10,7 +10,7 @@ class PassengerCarriage < Carriage
     @type = 'Passenger'
   end
 
-  def take_seat
-    @taken += 1 if available > 0
+  def load
+    super(1)
   end
 end
