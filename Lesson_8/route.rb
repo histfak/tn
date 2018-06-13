@@ -37,6 +37,8 @@ class Route
   protected
 
   def validate!
-    raise 'Wrong arguments!' if @stations.any? { |station| station.class != Station } || first_station == terminal_station
+    raise 'Wrong arguments!' if @stations.any? do |station|
+      station.class != Station || first_station == terminal_station
+    end
   end
 end

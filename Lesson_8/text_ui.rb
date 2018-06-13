@@ -13,6 +13,7 @@ class TextUi
 
   private
 
+  # rubocop:disable Metrics/LineLength
   def list_commands
     puts "\n===== MENU ====="
     puts 'Enter 1 to create a station'
@@ -32,13 +33,13 @@ class TextUi
     puts 'Enter 13 to see a list of trains in the station' if stations.any? && trains.any?
     puts 'Enter 14 to see a detailed list of all trains in the station' if stations.any? && trains.any?
     puts 'Enter 15 to see a list of all carriages in the train' if trains.any?
-    puts 'Enter 16 to load cargo to the Cargo carriage' if cars.any? { |car| car.type == 'Cargo'}
-    puts 'Enter 17 to take a seat in the Passenger carriage' if cars.any? { |car| car.type == 'Passenger'}
+    puts 'Enter 16 to load cargo to the Cargo carriage' if cars.any? { |car| car.type == 'Cargo' }
+    puts 'Enter 17 to take a seat in the Passenger carriage' if cars.any? { |car| car.type == 'Passenger' }
     puts "Enter another key to exit\n"
   end
 
+  # rubocop:enable Metrics/LineLength
   def menu
-
     loop do
       list_commands
       choice = gets.chomp
@@ -52,57 +53,31 @@ class TextUi
       when '4'
         ui_create_carriage
       when '5'
-        if routes.any?
-          ui_add_station
-        end
+        ui_add_station if routes.any?
       when '6'
-        if routes.any?
-          ui_remove_station
-        end
+        ui_remove_station if routes.any?
       when '7'
-        if trains.any?
-          ui_assign_route
-        end
+        ui_assign_route if trains.any?
       when '8'
-        if trains.any?
-          ui_move_forward
-        end
+        ui_move_forward if trains.any?
       when '9'
-        if trains.any?
-          ui_move_backward
-        end
+        ui_move_backward if trains.any?
       when '10'
-        if trains.any?
-          ui_add_carriage
-        end
+        ui_add_carriage if trains.any?
       when '11'
-        if trains.any?
-          ui_remove_carriage
-        end
+        ui_remove_carriage if trains.any?
       when '12'
-        if routes.any?
-          ui_list_stations
-        end
+        ui_list_stations if routes.any?
       when '13'
-        if stations.any?
-          ui_trains_status
-        end
+        ui_trains_statu if stations.any?
       when '14'
-        if stations.any?
-          ui_station_status
-        end
+        ui_station_status if stations.any?
       when '15'
-        if trains.any?
-          ui_carriages_status
-        end
+        ui_carriages_status if trains.any?
       when '16'
-        if cars.any? { |car| car.type == 'Cargo'}
-          ui_load_cargo
-        end
+        ui_load_cargo if cars.any? { |car| car.type == 'Cargo' }
       when '17'
-        if cars.any? { |car| car.type == 'Passenger'}
-          ui_take_seat
-        end
+        ui_take_seat if cars.any? { |car| car.type == 'Passenger' }
       else
         exit
       end
@@ -114,7 +89,9 @@ class TextUi
   end
 
   def show_all_routes
-    routes.each_with_index { |route, index| puts "#{index}: #{route.first_station.name} - #{route.terminal_station.name}" }
+    routes.each_with_index do |route, index|
+      puts "#{index}: #{route.first_station.name} - #{route.terminal_station.name}"
+    end
   end
 
   def show_all_trains
@@ -122,7 +99,9 @@ class TextUi
   end
 
   def show_all_cars
-    cars.each_with_index { |carriage, index| puts "#{index}: #{carriage.type}, capacity: #{carriage.capacity}, taken: #{carriage.taken}" }
+    cars.each_with_index do |carriage, index|
+      puts "#{index}: #{carriage.type}, capacity: #{carriage.capacity}, taken: #{carriage.taken}"
+    end
   end
 
   def stations_msg
@@ -250,7 +229,7 @@ class TextUi
     if @trains[train].nil? || @routes[route].nil?
       invalid_pars
     else
-      @trains[train].set_route(@routes[route])
+      @trains[train].add_route(@routes[route])
     end
   end
 
@@ -315,10 +294,11 @@ class TextUi
     station = gets.chomp.to_i
     print 'Enter a type of the train (Cargo or Passenger) or press "Return": '
     type = gets.chomp
+    return unless @stations[station]
     if type.empty?
-      @stations[station].trains_status.each { |train| puts train.number } if @stations[station]
+      @stations[station].trains_status.each { |train| puts train.number }
     else
-      @stations[station].trains_status(type).each { |train| puts train.number } if @stations[station]
+      @stations[station].trains_status(type).each { |train| puts train.number }
     end
   end
 

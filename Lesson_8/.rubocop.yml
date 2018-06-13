@@ -1,0 +1,38 @@
+Documentation:
+  Enabled: false
+
+Metrics/AbcSize:
+  Exclude:
+    - 'text_ui.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'text_ui.rb'
+
+Metrics/ClassLength:
+  Exclude:
+    - 'text_ui.rb'
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'text_ui.rb'
+
+Metrics/MethodLength:
+  Exclude:
+    - 'text_ui.rb'
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    - 'text_ui.rb'
+
+Style/ClassVars:
+  Exclude:
+    - 'station.rb'
+    - 'train.rb'
+
+#Style/GuardClause:
+#  Exclude:
+#    - 'text_ui.rb'
+
+Metrics/LineLength:
+  Max: 100

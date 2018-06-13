@@ -23,7 +23,7 @@ class Train
     @@trains_list[num]
   end
 
-  def set_route(route)
+  def add_route(route)
     @route = route
     @station = route.first_station
     route.first_station.train_arrival(self)
@@ -62,19 +62,17 @@ class Train
   end
 
   def move_forward
-    if next_station
-      @station.train_departure(self)
-      @station = route.stations[station_index.next]
-      @station.train_arrival(self)
-    end
+    return unless next_station
+    @station.train_departure(self)
+    @station = route.stations[station_index.next]
+    @station.train_arrival(self)
   end
 
   def move_backward
-    if previous_station
-      @station.train_departure(self)
-      @station = route.stations[station_index.pred]
-      @station.train_arrival(self)
-    end
+    return unless previous_station
+    @station.train_departure(self)
+    @station = route.stations[station_index.pred]
+    @station.train_arrival(self)
   end
 
   def go_round
