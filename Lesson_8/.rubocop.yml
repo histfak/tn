@@ -30,9 +30,5 @@ Style/ClassVars:
     - 'station.rb'
     - 'train.rb'
 
-#Style/GuardClause:
-#  Exclude:
-#    - 'text_ui.rb'
-
 Metrics/LineLength:
   Max: 100

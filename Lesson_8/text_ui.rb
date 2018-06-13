@@ -327,13 +327,10 @@ class TextUi
     show_all_cars
     cars_msg
     car = gets.chomp.to_i
-    if @cars[car] && @cars[car].type == 'Cargo'
-      print 'Enter an amount of cargo: '
-      cargo = gets.chomp.to_i
-      @cars[car].load(cargo)
-    else
-      raise 'Wrong arguments!'
-    end
+    raise 'Wrong arguments!' unless @cars[car] && @cars[car].type == 'Cargo'
+    print 'Enter an amount of cargo: '
+    cargo = gets.chomp.to_i
+    @cars[car].load(cargo)
   rescue RuntimeError => e
     puts e.message
     retry
@@ -344,11 +341,8 @@ class TextUi
     show_all_cars
     cars_msg
     car = gets.chomp.to_i
-    if @cars[car] && @cars[car].type == 'Passenger'
-      @cars[car].load
-    else
-      raise 'Wrong arguments!'
-    end
+    raise 'Wrong arguments!' unless @cars[car] && @cars[car].type == 'Passenger'
+    @cars[car].load
   rescue RuntimeError => e
     puts e.message
     retry
