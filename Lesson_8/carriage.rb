@@ -2,6 +2,7 @@ require_relative 'validation'
 
 class Carriage
   include Brand
+  include Validation
 
   attr_reader :capacity, :taken, :type
 
