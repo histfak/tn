@@ -6,14 +6,15 @@ class Train
   include Brand
   include InstanceCounter
   include Validation
-  attr_reader :number, :speed, :station, :route, :cars
+  attr_reader :number, :speed, :station, :route, :cars, :type
 
   @@trains_list = {}
 
-  def initialize(number)
+  def initialize(number, type)
     @number = number
     validate!
     @cars = []
+    @type = type
     @speed = 0
     @@trains_list[number] = self
     register_instance

@@ -3,11 +3,12 @@ require_relative 'validation'
 class Carriage
   include Brand
 
-  attr_reader :capacity, :taken
+  attr_reader :capacity, :taken, :type
 
-  def initialize(capacity)
+  def initialize(capacity, type)
     @capacity = capacity
     @taken = 0
+    @type = type
     validate!
   end
 

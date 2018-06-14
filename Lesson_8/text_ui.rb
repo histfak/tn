@@ -1,5 +1,22 @@
 class TextUi
   attr_reader :stations, :routes, :trains, :cars
+
+  CMDS = { c1: 'Enter 1 to create a station', c2: 'Enter 3 to create a train',
+           c3: 'Enter 3 to create a train', c4:  'Enter 4 to create a carriage',
+           c5: 'Enter 5 to add a station to the route',
+           c6: 'Enter 6 to remove a station from the route',
+           c7: 'Enter 6 to remove a station from the route',
+           c8: 'Enter 8 to move a train forward', c9: 'Enter 9 to move a train backward',
+           c10: 'Enter 10 to add a carriage', c11: 'Enter 11 to remove a carriage',
+           c12: 'Enter 12 to see a list of stations of the route',
+           c13: 'Enter 13 to see a list of trains in the station',
+           c14: 'Enter 14 to see a detailed list of all trains in the station',
+           c15: 'Enter 15 to see a list of all carriages in the train',
+           c16: 'Enter 16 to load cargo to the Cargo carriage',
+           c17: 'Enter 17 to take a seat in the Passenger carriage',
+           sep: '===================', menu: "\n===== MENU =====",
+           exit: "Enter another key to exit\n" }.freeze
+
   def initialize
     @stations = []
     @routes = []
@@ -13,44 +30,29 @@ class TextUi
 
   private
 
+  # rubocop:disable all
   def list_commands
-    cmds = { c1: 'Enter 1 to create a station', c2: 'Enter 3 to create a train',
-             c3: 'Enter 3 to create a train', c4:  'Enter 4 to create a carriage',
-             c5: 'Enter 5 to add a station to the route',
-             c6: 'Enter 6 to remove a station from the route',
-             c7: 'Enter 6 to remove a station from the route',
-             c8: 'Enter 8 to move a train forward', c9: 'Enter 9 to move a train backward',
-             c10: 'Enter 10 to add a carriage', c11: 'Enter 11 to remove a carriage',
-             c12: 'Enter 12 to see a list of stations of the route',
-             c13: 'Enter 13 to see a list of trains in the station',
-             c14: 'Enter 14 to see a detailed list of all trains in the station',
-             c15: 'Enter 15 to see a list of all carriages in the train',
-             c16: 'Enter 16 to load cargo to the Cargo carriage',
-             c17: 'Enter 17 to take a seat in the Passenger carriage',
-             sep: '===================', menu: "\n===== MENU =====",
-             exit: "Enter another key to exit\n" }
-
-    puts cmds[:menu]
-    puts cmds[:c1]
-    puts cmds[:c2] if stations.size >= 2
-    puts cmds[:c3]
-    puts cmds[:c4]
-    puts cmds[:sep]
-    puts cmds[:c5] if routes.any?
-    puts cmds[:c6] if routes.any?
-    puts cmds[:c7] if routes.any? && trains.any?
-    puts cmds[:c8] if trains.any? { |train| !train.route.nil? }
-    puts cmds[:c9] if trains.any? && routes.any?
-    puts cmds[:c10] if trains.any? && cars.any?
-    puts cmds[:c11] if trains.any? { |train| train.cars.size >= 1 }
-    puts cmds[:sep]
-    puts cmds[:c12] if routes.any?
-    puts cmds[:c13] if stations.any? { |station| station.trains.size >= 1 }
-    puts cmds[:c14] if stations.any? && trains.any?
-    puts cmds[:c15] if trains.any?
-    puts cmds[:c16] if cars.any? { |car| car.type == 'Cargo' }
-    puts cmds[:c17] if cars.any? { |car| car.type == 'Passenger' }
-    puts cmds[:exit]
+    puts CMDS[:menu]
+    puts CMDS[:c1]
+    puts CMDS[:c2] if stations.size >= 2
+    puts CMDS[:c3]
+    puts CMDS[:c4]
+    puts CMDS[:sep]
+    puts CMDS[:c5] if routes.any?
+    puts CMDS[:c6] if routes.any?
+    puts CMDS[:c7] if routes.any? && trains.any?
+    puts CMDS[:c8] if trains.any? { |train| !train.route.nil? }
+    puts CMDS[:c9] if trains.any? && routes.any?
+    puts CMDS[:c10] if trains.any? && cars.any?
+    puts CMDS[:c11] if trains.any? { |train| train.cars.size >= 1 }
+    puts CMDS[:sep]
+    puts CMDS[:c12] if routes.any?
+    puts CMDS[:c13] if stations.any? { |station| station.trains.size >= 1 }
+    puts CMDS[:c14] if stations.any? && trains.any?
+    puts CMDS[:c15] if trains.any?
+    puts CMDS[:c16] if cars.any? { |car| car.type == 'Cargo' }
+    puts CMDS[:c17] if cars.any? { |car| car.type == 'Passenger' }
+    puts CMDS[:exit]
   end
 
   def menu
@@ -98,6 +100,7 @@ class TextUi
     end
   end
 
+  # rubocop:enable all
   def show_all_stations
     stations.each_with_index { |station, index| puts "#{index}: #{station.name}" }
   end
@@ -116,6 +119,66 @@ class TextUi
     cars.each_with_index do |carriage, index|
       puts "#{index}: #{carriage.type}, capacity: #{carriage.capacity}, taken: #{carriage.taken}"
     end
+  end
+
+  def show_cargo_cars
+    cars.each_with_index do |carriage, index|
+      puts "#{index}: capacity: #{carriage.capacity}, taken: #{carriage.taken}" \
+      if carriage.type == 'Cargo'
+    end
+  end
+
+  def show_passenger_cars
+    cars.each_with_index do |carriage, index|
+      puts "#{index}: capacity: #{carriage.capacity}, taken: #{carriage.taken}" \
+      if carriage.type == 'Passenger'
+    end
+  end
+
+  def choose_carriage
+    show_all_cars
+    cars_msg
+    index = gets.chomp.to_i
+    @cars[index]
+  end
+
+  def choose_cargo_carriage
+    show_cargo_cars
+    cars_msg
+    index = gets.chomp.to_i
+    @cars[index]
+  end
+
+  def choose__passenger_carriage
+    show_passenger_cars
+    cars_msg
+    index = gets.chomp.to_i
+    @cars[index]
+  end
+
+  def choose_train
+    show_all_trains
+    trains_msg
+    index = gets.chomp.to_i
+    @trains[index]
+  end
+
+  def choose_station
+    show_all_stations
+    stations_msg_msg
+    index = gets.chomp.to_i
+    @stations[index]
+  end
+
+  def choose_route
+    show_all_routes
+    routes_msg
+    index = gets.chomp.to_i
+    @routes[index]
+  end
+
+  def wrong_choice?(*args)
+    args.any?(&:nil?)
   end
 
   def stations_msg
@@ -204,147 +267,113 @@ class TextUi
 
   # 5
   def ui_add_station
-    show_all_routes
-    routes_msg
-    route = gets.chomp.to_i
-    show_all_stations
-    stations_msg
-    station = gets.chomp.to_i
-    if @routes[route].nil? || @stations[station].nil?
+    route = choose_route
+    station = choose_station
+    if wrong_choice?(route, station)
       invalid_pars
     else
-      @routes[route].add_station(@stations[station])
+      route.add_station(station)
     end
   end
 
   # 6
   def ui_remove_station
-    show_all_routes
-    routes_msg
-    route = gets.chomp.to_i
-    show_all_stations
-    stations_msg
-    station = gets.chomp.to_i
-    if @routes[route].nil? || @stations[station].nil?
+    route = choose_route
+    station = choose_station
+    if wrong_choice?(route, station)
       invalid_pars
     else
-      @routes[route].remove_station(@stations[station])
+      route.remove_station(station)
     end
   end
 
   # 7
   def ui_assign_route
-    show_all_routes
-    routes_msg
-    route = gets.chomp.to_i
-    show_all_trains
-    trains_msg
-    train = gets.chomp.to_i
-    if @trains[train].nil? || @routes[route].nil?
+    route = choose_route
+    train = choose_train
+    if wrong_choice?(route, train)
       invalid_pars
     else
-      @trains[train].add_route(@routes[route])
+      train.add_route(route)
     end
   end
 
   # 8
   def ui_move_forward
-    show_all_trains
-    trains_msg
-    train = gets.chomp.to_i
-    @trains[train].move_forward if @trains[train]
+    train = choose_train
+    train.move_forward if train
   end
 
   # 9
   def ui_move_backward
-    show_all_trains
-    trains_msg
-    train = gets.chomp.to_i
-    @trains[train].move_backward if @trains[train]
+    train = choose_train
+    train.move_backward if train
   end
 
   # 10
   def ui_add_carriage
-    show_all_trains
-    trains_msg
-    train = gets.chomp.to_i
-    show_all_cars
-    cars_msg
-    carriage = gets.chomp.to_i
-    if @trains[train].nil? || @cars[carriage].nil?
+    train = choose_train
+    carriage = choose_carriage
+    if wrong_choice?(train, carriage)
       invalid_pars
     else
-      @trains[train].add_carriage(@cars[carriage])
+      train.add_carriage(carriage)
     end
   end
 
   # 11
   def ui_remove_carriage
-    show_all_trains
-    trains_msg
-    train = gets.chomp.to_i
-    show_all_cars
-    cars_msg
-    carriage = gets.chomp.to_i
-    if @trains[train].nil? || @cars[carriage].nil?
+    train = choose_train
+    carriage = choose_carriage
+    if wrong_choice?(train, carriage)
       invalid_pars
     else
-      @trains[train].remove_carriage(@cars[carriage])
+      train.remove_carriage(carriage)
     end
   end
 
   # 12
   def ui_list_stations
-    show_all_routes
-    routes_msg
-    route = gets.chomp.to_i
-    @routes[route].list_stations if @routes[route]
+    route = choose_route
+    route.list_stations if route
   end
 
   # 13
   def ui_trains_status
-    show_all_stations
-    stations_msg
-    station = gets.chomp.to_i
+    station = choose_station
     print 'Enter a type of the train (Cargo or Passenger) or press "Return": '
     type = gets.chomp
-    return unless @stations[station]
+    return unless station
     if type.empty?
-      @stations[station].trains_status.each { |train| puts train.number }
+      station.trains_status.each { |train| puts train.number }
     else
-      @stations[station].trains_status(type).each { |train| puts train.number }
+      station.trains_status(type).each { |train| puts train.number }
     end
   end
 
   # 14
   def ui_station_status
-    show_all_stations
-    stations_msg
-    station = gets.chomp.to_i
-    @stations[station].go_round do |train|
+    station = choose_station
+    station.go_round do |train|
       puts "Train \##{train.number}, type: #{train.type}, #{train.cars.size} carriages"
     end
   end
 
   # 15
   def ui_carriages_status
-    show_all_trains
-    trains_msg
-    train = gets.chomp.to_i
-    @trains[train].go_round do |car, index|
+    train = choose_train
+    train.go_round do |car, index|
       puts "Carriage #{index}, type: #{car.type}, capacity: #{car.capacity}, taken: #{car.taken}"
     end
   end
 
   # 16
   def ui_load_cargo
-    show_all_cars
-    cars_msg
-    car = gets.chomp.to_i
-    raise 'Wrong arguments!' unless @cars[car] && @cars[car].type == 'Cargo'
+    carriage = choose_cargo_carriage
+    raise 'Wrong arguments!' unless carriage
     print 'Enter an amount of cargo: '
     cargo = gets.chomp.to_i
-    @cars[car].load(cargo)
+    carriage.load(cargo)
   rescue RuntimeError => e
     puts e.message
     retry
@@ -352,11 +381,9 @@ class TextUi
 
   # 17
   def ui_take_seat
-    show_all_cars
-    cars_msg
-    car = gets.chomp.to_i
-    raise 'Wrong arguments!' unless @cars[car] && @cars[car].type == 'Passenger'
-    @cars[car].load
+    carriage = choose__passenger_carriage
+    raise 'Wrong arguments!' unless carriage
+    carriage.load
   rescue RuntimeError => e
     puts e.message
     retry

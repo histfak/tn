@@ -3,11 +3,8 @@ require_relative 'validation'
 class PassengerCarriage < Carriage
   include Validation
 
-  attr_reader :type
-
   def initialize(capacity)
-    super(capacity)
-    @type = 'Passenger'
+    super(capacity, 'Passenger')
   end
 
   def load
