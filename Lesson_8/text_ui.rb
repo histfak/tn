@@ -149,7 +149,7 @@ class TextUi
     @cars[index]
   end
 
-  def choose__passenger_carriage
+  def choose_passenger_carriage
     show_passenger_cars
     cars_msg
     index = gets.chomp.to_i
@@ -381,7 +381,7 @@ class TextUi
 
   # 17
   def ui_take_seat
-    carriage = choose__passenger_carriage
+    carriage = choose_passenger_carriage
     raise 'Wrong arguments!' unless carriage
     carriage.load
   rescue RuntimeError => e
