@@ -9,11 +9,15 @@ class Station
 
   @@instances_list = []
 
+  validate :name, :presence
+  validate :name, :type, String
+  validate :name, :format, /^\w+$/i
+
   def initialize(name)
     @name = name
-    validate!
     @trains = []
     @@instances_list << self
+    validate!
     register_instance
   end
 
@@ -39,11 +43,5 @@ class Station
 
   def go_round
     @trains.each { |train| yield train }
-  end
-
-  protected
-
-  def validate!
-    raise 'Incorrect name!' if name.empty? || name.class != String
   end
 end

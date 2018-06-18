@@ -4,12 +4,12 @@ class Carriage
   include Brand
   include Validation
 
-  attr_reader :capacity, :taken, :type
+  attr_reader :capacity, :taken, :kind
 
-  def initialize(capacity, type)
+  def initialize(capacity, kind)
     @capacity = capacity
     @taken = 0
-    @type = type
+    @kind = kind
     validate!
   end
 

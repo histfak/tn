@@ -50,8 +50,8 @@ class TextUi
     puts CMDS[:c13] if stations.any? { |station| station.trains.size >= 1 }
     puts CMDS[:c14] if stations.any? && trains.any?
     puts CMDS[:c15] if trains.any?
-    puts CMDS[:c16] if cars.any? { |car| car.type == 'Cargo' }
-    puts CMDS[:c17] if cars.any? { |car| car.type == 'Passenger' }
+    puts CMDS[:c16] if cars.any? { |car| car.kind == 'Cargo' }
+    puts CMDS[:c17] if cars.any? { |car| car.kind == 'Passenger' }
     puts CMDS[:exit]
   end
 
@@ -91,9 +91,9 @@ class TextUi
       when '15'
         ui_carriages_status if trains.any?
       when '16'
-        ui_load_cargo if cars.any? { |car| car.type == 'Cargo' }
+        ui_load_cargo if cars.any? { |car| car.kind == 'Cargo' }
       when '17'
-        ui_take_seat if cars.any? { |car| car.type == 'Passenger' }
+        ui_take_seat if cars.any? { |car| car.kind == 'Passenger' }
       else
         exit
       end
@@ -117,21 +117,21 @@ class TextUi
 
   def show_all_cars
     cars.each_with_index do |carriage, index|
-      puts "#{index}: #{carriage.type}, capacity: #{carriage.capacity}, taken: #{carriage.taken}"
+      puts "#{index}: #{carriage.kind}, capacity: #{carriage.capacity}, taken: #{carriage.taken}"
     end
   end
 
   def show_cargo_cars
     cars.each_with_index do |carriage, index|
       puts "#{index}: capacity: #{carriage.capacity}, taken: #{carriage.taken}" \
-      if carriage.type == 'Cargo'
+      if carriage.kind == 'Cargo'
     end
   end
 
   def show_passenger_cars
     cars.each_with_index do |carriage, index|
       puts "#{index}: capacity: #{carriage.capacity}, taken: #{carriage.taken}" \
-      if carriage.type == 'Passenger'
+      if carriage.kind == 'Passenger'
     end
   end
 
@@ -231,10 +231,10 @@ class TextUi
     print 'Enter a number of the train: '
     number = gets.chomp
     print 'Enter a type of the train (Cargo or Passenger): '
-    type = gets.chomp
-    if type == 'Passenger'
+    kind = gets.chomp
+    if kind == 'Passenger'
       @trains << PassengerTrain.new(number)
-    elsif type == 'Cargo'
+    elsif kind == 'Cargo'
       @trains << CargoTrain.new(number)
     else
       raise 'Wrong train type!'
@@ -248,12 +248,12 @@ class TextUi
   # 4
   def ui_create_carriage
     print 'Enter a type of the carriage (Cargo or Passenger): '
-    type = gets.chomp
-    if type == 'Cargo'
+    kind = gets.chomp
+    if kind == 'Cargo'
       print 'Enter a capacity of the carriage: '
       capacity = gets.chomp.to_i
       @cars << CargoCarriage.new(capacity)
-    elsif type == 'Passenger'
+    elsif kind == 'Passenger'
       print 'Enter a number of seats: '
       seats = gets.chomp.to_i
       @cars << PassengerCarriage.new(seats)
@@ -342,12 +342,12 @@ class TextUi
   def ui_trains_status
     station = choose_station
     print 'Enter a type of the train (Cargo or Passenger) or press "Return": '
-    type = gets.chomp
+    kind = gets.chomp
     return unless station
-    if type.empty?
+    if kind.empty?
       station.trains_status.each { |train| puts train.number }
     else
-      station.trains_status(type).each { |train| puts train.number }
+      station.trains_status(kind).each { |train| puts train.number }
     end
   end
 
@@ -355,7 +355,7 @@ class TextUi
   def ui_station_status
     station = choose_station
     station.go_round do |train|
-      puts "Train \##{train.number}, type: #{train.type}, #{train.cars.size} carriages"
+      puts "Train \##{train.number}, type: #{train.kind}, #{train.cars.size} carriages"
     end
   end
 
@@ -363,7 +363,7 @@ class TextUi
   def ui_carriages_status
     train = choose_train
     train.go_round do |car, index|
-      puts "Carriage #{index}, type: #{car.type}, capacity: #{car.capacity}, taken: #{car.taken}"
+      puts "Carriage #{index}, type: #{car.kind}, capacity: #{car.capacity}, taken: #{car.taken}"
     end
   end
 

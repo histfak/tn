@@ -1,22 +1,30 @@
 require_relative 'brand'
 require_relative 'instance_counter'
 require_relative 'validation'
+require_relative 'accessors'
 
 class Train
   include Brand
   include InstanceCounter
   include Validation
-  attr_reader :number, :speed, :station, :route, :cars, :type
+  extend Accessors
+  attr_reader :number, :speed, :station, :route, :cars, :kind
+
+  validate :number, :presence
+  validate :number, :type, String
+  validate :number, :format, /^[a-z0-9]{3}-?[a-z0-9]{2}$/i
+  validate :kind, :type, String
+  validate :kind, :format, /^\w+$/i
 
   @@trains_list = {}
 
-  def initialize(number, type)
+  def initialize(number, kind)
     @number = number
-    validate!
     @cars = []
-    @type = type
+    @kind = kind
     @speed = 0
     @@trains_list[number] = self
+    validate!
     register_instance
   end
 
@@ -39,7 +47,7 @@ class Train
   end
 
   def add_carriage(carriage)
-    @cars << carriage if speed.zero? && !@cars.include?(carriage) && carriage.type == type
+    @cars << carriage if speed.zero? && !@cars.include?(carriage) && carriage.kind == kind
   end
 
   def remove_carriage(carriage)
@@ -81,10 +89,6 @@ class Train
   end
 
   protected
-
-  def validate!
-    raise 'Incorrect number!' if number !~ /^[a-z0-9]{3}-?[a-z0-9]{2}$/i
-  end
 
   def station_index
     route.stations.index(@station)
