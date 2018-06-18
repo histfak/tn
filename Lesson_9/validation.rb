@@ -31,6 +31,8 @@ module Validation
       false
     end
 
+    protected
+
     def get_var(name)
       var_name = "@#{name}"
       instance_variable_get(var_name)
