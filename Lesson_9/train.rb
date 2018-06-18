@@ -9,6 +9,8 @@ class Train
   include Validation
   extend Accessors
   attr_reader :number, :speed, :station, :route, :cars, :kind
+  attr_accessor_with_history :notes
+  strong_attr_accessor :age, Integer
 
   validate :number, :presence
   validate :number, :type, String
