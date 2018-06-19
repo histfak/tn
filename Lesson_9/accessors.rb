@@ -5,7 +5,8 @@ module Accessors
       define_method("#{name}_history".to_sym) { instance_variable_get("@#{name}_history".to_sym) }
       define_method("#{name}=".to_sym) do |value|
         history = (instance_variable_get("@#{name}_history") || [])
-        instance_variable_set("@#{name}_history".to_sym, history << instance_variable_get("@#{name}".to_sym))
+        instance_variable_set("@#{name}_history".to_sym, \
+                              history << instance_variable_get("@#{name}".to_sym))
         instance_variable_set("@#{name}".to_sym, value)
       end
     end

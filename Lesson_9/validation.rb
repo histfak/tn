@@ -17,9 +17,9 @@ module Validation
   module InstanceMethods
     def validate!
       self.class.validations.each do |pattern|
-        pattern.each do |head, tail|
-          value = get_var(head)
-          send(tail[:variant], value, tail[:opts])
+        pattern.each do |attribute, args|
+          value = get_var(attribute)
+          send(args[:variant], value, args[:opts])
         end
       end
     end
